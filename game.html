@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Rock, Paper, Scissors..Shoot!</title>
+    </head>
+
+
+    <body>
+        <script>
+            function computerPlay() {
+            }
+            
+            function computerSelection() {
+                const choices = ['rock','paper','scissors']; //Establish the possible choices for the computer
+                let selection = Math.floor(Math.random() * 3); //Computer randomly selects from integers 0 through 2 (rounded down for accuracy with Math.floor function)
+                return choices[selection]; //Computer uses random number generated to select item from list
+            }
+
+            let playerSelection = prompt("Rock, paper, scissors... Shoot!").toLowerCase() //prompt user for his move, make lower case automatically for homogeneity
+                while (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') { //if the player didn't choose rock, paper, or scissors
+                    playerSelection = prompt("Rock, paper, scissors... Shoot!").toLowerCase() // keep repeating until correct
+                }
+
+            function playRound(playerSelection, computerSelection) {
+            }
+
+            console.log(computerSelection());
+            console.log(playerSelection);
+        </script>
+    </body>
+</html>

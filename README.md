@@ -1,2 +1,2 @@
 # rock-paper-scissors
-This is a simple implementation of grade-school classic “rock paper scissors”. 
+This is a simple implementation of grade-school classic “rock, paper, scissors”. This initial version will only play from the browser (chrome DevTools) console, but I will revisit it and add a front end later on.
