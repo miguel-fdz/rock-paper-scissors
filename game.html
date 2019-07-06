@@ -8,25 +8,51 @@
 
     <body>
         <script>
-            function computerPlay() {
-            }
-            
-            function computerSelection() {
+            function computerMove() {
                 const choices = ['rock','paper','scissors']; //Establish the possible choices for the computer
                 let selection = Math.floor(Math.random() * 3); //Computer randomly selects from integers 0 through 2 (rounded down for accuracy with Math.floor function)
+                console.log(choices[selection]);
                 return choices[selection]; //Computer uses random number generated to select item from list
             }
 
-            let playerSelection = prompt("Rock, paper, scissors... Shoot!").toLowerCase() //prompt user for his move, make lower case automatically for homogeneity
-                while (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') { //if the player didn't choose rock, paper, or scissors
-                    playerSelection = prompt("Rock, paper, scissors... Shoot!").toLowerCase() // keep repeating until correct
-                }
+            function playerMove() {  
+                return prompt("Rock, paper, scissors... Shoot!");
+            }//.toLowerCase()}; //prompt user for his move, make lower case automatically for homogeneity
 
-            function playRound(playerSelection, computerSelection) {
+            function playRound() { //play a round 
+                //ask player for his move
+                let playerSelection =  playerMove();
+                console.log('Player chooses: ', playerSelection);
+                let computerSelection = computerMove();
+                /*while (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') { //if the player didn't choose rock, paper, or scissors
+                    playerSelection = playerMove(); //keep repeating until player inputs correctly
+                }*/
+                if (playerSelection == computerSelection) playRound(); //if player and computer chose the same move, play again
+                else if (playerSelection == 'rock' && computerSelection == 'scissors') return true;
+                else if (playerSelection == 'paper' && computerSelection == 'rock') return true;
+                else if (playerSelection == 'scissors' && computerSelection == 'paper') return true;
+                else if (playerSelection == 'rock' && computerSelection == 'paper') return false;
+                else if (playerSelection == 'paper' && computerSelection == 'scissors') return false;
+                else if (playerSelection == 'scissors' && computerSelection == 'rock') return false;
+
+                return 
             }
 
-            console.log(computerSelection());
-            console.log(playerSelection);
+            function game() { //
+                let playerScore = 0;
+                let computerScore = 0;
+                for (let index = 0; index < 5; index++) {
+                    let result = playRound();
+                    console.log('round : ', result);
+                    if ( result == true) playerScore++;
+                    else computerScore++;
+                }
+                if (playerScore >= 3) alert("Player wins!");
+                else alert("You lose!")
+            }
+            
+            game(); //start game
+
         </script>
     </body>
 </html>
