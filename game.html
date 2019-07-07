@@ -11,46 +11,41 @@
             function computerMove() {
                 const choices = ['rock','paper','scissors']; //Establish the possible choices for the computer
                 let selection = Math.floor(Math.random() * 3); //Computer randomly selects from integers 0 through 2 (rounded down for accuracy with Math.floor function)
-                console.log(choices[selection]);
                 return choices[selection]; //Computer uses random number generated to select item from list
             }
 
             function playerMove() {  
-                return prompt("Rock, paper, scissors... Shoot!");
-            }//.toLowerCase()}; //prompt user for his move, make lower case automatically for homogeneity
+                return prompt("Rock, paper, scissors... Shoot!").toLowerCase(); //prompt user for his move
+            }
 
             function playRound() { //play a round 
-                //ask player for his move
-                let playerSelection =  playerMove();
-                console.log('Player chooses: ', playerSelection);
+                let playerSelection =  playerMove();//.toLowerCase; //ask player for his move
+                console.log('You play: ' + playerSelection);
                 let computerSelection = computerMove();
-                /*while (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') { //if the player didn't choose rock, paper, or scissors
-                    playerSelection = playerMove(); //keep repeating until player inputs correctly
-                }*/
-                if (playerSelection == computerSelection) playRound(); //if player and computer chose the same move, play again
-                else if (playerSelection == 'rock' && computerSelection == 'scissors') return true;
-                else if (playerSelection == 'paper' && computerSelection == 'rock') return true;
-                else if (playerSelection == 'scissors' && computerSelection == 'paper') return true;
-                else if (playerSelection == 'rock' && computerSelection == 'paper') return false;
-                else if (playerSelection == 'paper' && computerSelection == 'scissors') return false;
-                else if (playerSelection == 'scissors' && computerSelection == 'rock') return false;
-
-                return 
+                console.log('Computer plays: ' + computerSelection);
+                if (playerSelection == 'rock' && computerSelection == 'scissors') return playerScore++; 
+                else if (playerSelection == 'paper' && computerSelection == 'rock') return playerScore++;
+                else if (playerSelection == 'scissors' && computerSelection == 'paper') return playerScore++;
+                else if (playerSelection == 'rock' && computerSelection == 'paper') return computerScore++;
+                else if (playerSelection == 'paper' && computerSelection == 'scissors') return computerScore++;
+                else if (playerSelection == 'scissors' && computerSelection == 'rock') return computerScore++;
+                else {
+                    console.log('Play again!');
+                    playRound(); //if player and computer chose the same move or player input is invalid, play again
+                } 
             }
 
             function game() { //
-                let playerScore = 0;
-                let computerScore = 0;
-                for (let index = 0; index < 5; index++) {
-                    let result = playRound();
-                    console.log('round : ', result);
-                    if ( result == true) playerScore++;
-                    else computerScore++;
+                for (let index = 0; index < 5; index++) { //play five rounds
+                    playRound();
+                    console.log('Player score: ' + playerScore + ' || Computer score: ' + computerScore);
                 }
-                if (playerScore >= 3) alert("Player wins!");
-                else alert("You lose!")
+                if (playerScore > computerScore) alert("You win!"); //alert the winner
+                else alert("Computer wins!");
             }
             
+            let playerScore = 0;
+            let computerScore = 0;
             game(); //start game
 
         </script>
