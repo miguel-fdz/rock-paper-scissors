@@ -1,2 +1,2 @@
 # rock-paper-scissors
-This is a simple implementation of grade-school classic “rock, paper, scissors”. This initial version will only play from the browser (chrome DevTools) in the console tab, but I will revisit it and add a front end later on.
+This is a simple implementation of the grade-school classic “rock, paper, scissors”. The initial version was only played from the browser (chrome DevTools) in the console tab, however since 24.07.19 a very simple UI has been implemented so that the player can play the game by clicking on buttons rather than typing their answer in a prompt.

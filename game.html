@@ -5,49 +5,105 @@
         <title>Rock, Paper, Scissors..Shoot!</title>
     </head>
 
-
     <body>
+        <h1>Rock, Paper, Scissors!</h1>
+        <p>Best out of 5</p>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+        <br><br>
+        <div id="score">Score
+          <p>Player score: 0 || Computer score: 0</p>
+        </div>
+        <div id="container">Results</div>
         <script>
-            function computerMove() {
-                const choices = ['rock','paper','scissors']; //Establish the possible choices for the computer
-                let selection = Math.floor(Math.random() * 3); //Computer randomly selects from integers 0 through 2 (rounded down for accuracy with Math.floor function)
-                return choices[selection]; //Computer uses random number generated to select item from list
-            }
+          /**
+           * Establish score at zero for game start
+           */
+          let playerScore = 0;
+          let computerScore = 0;
+        
+          /**
+            * Randomly selects the computer choice
+            *
+            * @returns {string} the computer choice
+            */
+          const choices = ["rock", "paper", "scissors"]; //Establish the possible choices for the computer
+          function computerMove() {
+              let selection = Math.floor(Math.random() * 3); //Computer randomly selects from integers 0 through 2 (rounded down for accuracy with Math.floor function)
+              return choices[selection]; //Computer uses random number generated to select item from list
+          }
+          
+          /**
+            * Iterate through different buttons and on click
+            * 
+            * @play round according to respective button's id
+            */
+          const buttons = document.querySelectorAll('button');
+          buttons.forEach((button) => {
+              button.addEventListener('click', () => playRound(button.id))
+          });
+        
+          /**
+            * Plays round and announces the winner 
+            */        
+          function playRound(playerSelection) {
+            let myNode = document.getElementById("container");
+            while (myNode.firstChild) myNode.removeChild(myNode.firstChild); //erase previous round display if it already exists
 
-            function playerMove() {  
-                return prompt("Rock, paper, scissors... Shoot!").toLowerCase(); //prompt user for his move
-            }
-
-            function playRound() { //play a round 
-                let playerSelection =  playerMove();//.toLowerCase; //ask player for his move
-                console.log('You play: ' + playerSelection);
-                let computerSelection = computerMove();
-                console.log('Computer plays: ' + computerSelection);
-                if (playerSelection == 'rock' && computerSelection == 'scissors') return playerScore++; 
-                else if (playerSelection == 'paper' && computerSelection == 'rock') return playerScore++;
-                else if (playerSelection == 'scissors' && computerSelection == 'paper') return playerScore++;
-                else if (playerSelection == 'rock' && computerSelection == 'paper') return computerScore++;
-                else if (playerSelection == 'paper' && computerSelection == 'scissors') return computerScore++;
-                else if (playerSelection == 'scissors' && computerSelection == 'rock') return computerScore++;
-                else {
-                    console.log('Play again!');
-                    playRound(); //if player and computer chose the same move or player input is invalid, play again
-                } 
-            }
-
-            function game() { //
-                for (let index = 0; index < 5; index++) { //play five rounds
-                    playRound();
-                    console.log('Player score: ' + playerScore + ' || Computer score: ' + computerScore);
-                }
-                if (playerScore > computerScore) alert("You win!"); //alert the winner
-                else alert("Computer wins!");
-            }
+            const playerChoice = document.createElement('p'); 
+            playerChoice.textContent = "You play: " + playerSelection; //display player move on DOM
             
-            let playerScore = 0;
-            let computerScore = 0;
-            game(); //start game
-
+            let computerSelection = computerMove();
+            const computerChoice = document.createElement('p'); 
+            computerChoice.textContent = "Computer plays: " + computerSelection; //display computer move on DOM
+            
+            const roundResult = document.createElement('p'); 
+            if (
+                (playerSelection === "rock" && computerSelection === "scissors") ||
+                (playerSelection === "paper" && computerSelection === "rock") ||
+                (playerSelection === "scissors" && computerSelection === "paper")
+            ){
+            roundResult.textContent = ('You win this round!'); //announce player as round winner on DOM
+            keepScore('player');
+            }
+            else if (
+                (playerSelection === "rock" && computerSelection === "paper") ||
+                (playerSelection === "paper" && computerSelection === "scissors") ||
+                (playerSelection === "scissors" && computerSelection === "rock")
+            ){
+            roundResult.textContent = ('Computer wins this round!'); //announce computer as round winner
+            keepScore();
+            }
+            else {
+            roundResult.textContent = ('Play again!'); //if computer and player chose the same move, advise player to retry
+            }
+            container.appendChild(playerChoice);
+            container.appendChild(computerChoice);
+            container.appendChild(roundResult);
+            }
+          
+          function keepScore(x) {
+            if (x === 'player') playerScore++;
+            else computerScore++;
+            
+            /**
+             * Remove previous running score and display new result
+             */
+            myNode = score.firstElementChild;
+            score.removeChild(myNode);
+            const runningResult = document.createElement('p'); 
+            runningResult.textContent = "Player score: " + playerScore + " || Computer score: " + computerScore; //display running score
+            score.appendChild(runningResult);
+            
+            /**
+             * Once 5th round is complete, alert winner
+             */
+            if ((playerScore + computerScore) >= 5) {
+              if (playerScore > computerScore) alert("You win!");
+              else alert("Computer wins!");
+            }
+          }
         </script>
     </body>
 </html>
